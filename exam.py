@@ -2,7 +2,6 @@ from datetime import date
 from exceptions import StudentNotFoundException
 
 class Exam:
-    """Класс для экзамена"""
     def __init__(self, subject, teacher, group, exam_date: date):
         self.subject = subject
         self.teacher = teacher
@@ -11,9 +10,8 @@ class Exam:
         self.grades = {}
 
     def assign_grade(self, student, grade: int):
-        """Преподаватель выставляет оценку студенту"""
         if student not in self.group:
-            raise StudentNotFoundException(student.name, self.group.group_name)
+            raise StudentNotFoundException(f"Студент {student.name} не найден в группе {self.group.group_name}")
         self.grades[student] = grade
 
     def __str__(self):

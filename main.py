@@ -1,8 +1,8 @@
-from student import StudentGroup
+from student_group import StudentGroup
 from teacher import Teacher
 from subject import Subject
 from exam import Exam
-from ticket import TicketGenerator
+from ticket_generator import TicketGenerator
 from utils import generate_fake_students, generate_fake_questions
 from datetime import date
 
@@ -19,12 +19,23 @@ teacher.add_subject(subject)
 
 # Экзамен
 exam = Exam(subject=subject, teacher=teacher, group=group, exam_date=date.today())
-print(f"Экзамен по {subject.name} прошел {exam.exam_date}.")
+
+# Использование генератора для вывода студентов
+print("Список студентов:")
+for student in group.generate_students():
+    print(f"Студент: {student.name}, ID: {student.student_id}")
+
+# Вывод информации о студентах и их оценках
+print(f"\nЭкзамен по {subject.name} прошел {exam.exam_date}.")
 
 # Генерация билетов
 ticket_gen = TicketGenerator(teacher=teacher)
-for question, answer in generate_fake_questions(5):
-    ticket = next(ticket_gen.generate_ticket(question, answer))
-    print(ticket)
+questions_and_answers = generate_fake_questions(5)
+ticket_gen.add_questions(questions_and_answers)
 
-
+while True:
+    try:
+        ticket = next(ticket_gen)  
+        print(ticket)
+    except StopIteration:
+        break

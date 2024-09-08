@@ -1,11 +1,9 @@
 class Subject:
-    """Класс для предмета"""
     def __init__(self, name: str):
         self.name = name
         self.teacher = None  
 
     def set_teacher(self, teacher):
-        """Устанавливаем учителя"""
         self.teacher = teacher
 
     def __str__(self):
